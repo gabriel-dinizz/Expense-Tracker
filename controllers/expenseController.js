@@ -5,6 +5,7 @@ const Expense = require("../models/Expense");
 exports.createExpense = async (req, res) => {
   try {
     const { amount, description, expense_date, userId, categoryId } = req.body;
+
     const newExpense = await Expense.create({
       amount,
       description,
@@ -12,8 +13,11 @@ exports.createExpense = async (req, res) => {
       UserId: userId,
       CategoryId: categoryId,
     });
+
     res.status(201).json(newExpense);
   } catch (error) {
+    // Add detailed error logging here
+    console.error("Error creating expense: ", error);
     res.status(400).json({ error: "Failed to create expense" });
   }
 };
